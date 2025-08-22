@@ -43,6 +43,7 @@ const addProducts = () => {
       createdAt
     }
     const result = await addProduct(ProductPayload)
+    // console.log(result)
     if(result?.acknowledged){
       toast.success('New Product added successfully')
       formData.reset()
