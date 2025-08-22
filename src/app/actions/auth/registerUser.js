@@ -1,4 +1,4 @@
-// src/app/actions/auth/registerUser.js
+
 "use server";
 import bcrypt from "bcrypt";
 import dbConnect, { collectionNameObj } from "../../../lib/dbConnect";

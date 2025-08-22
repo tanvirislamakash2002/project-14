@@ -26,10 +26,8 @@ const LoginForm = () => {
 
       }
     } catch (error) {
-      console.log(error)
+      // console.log(error)
     }
-    // console.log('Login data:', email, password);
-    // Add your login logic here
   };
 
 

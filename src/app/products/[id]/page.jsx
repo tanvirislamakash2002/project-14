@@ -7,7 +7,7 @@ const productDetails = async({params}) => {
     const p = await params;
     const productsCollection = dbConnect(collectionNameObj.servicesCollection)
     const product = await productsCollection.findOne({_id:new ObjectId(p.id)})
-    console.log(product)
+    // console.log(product)
     return (
          <div className="min-h-screen bg-base-200 flex justify-center items-center p-6">
       <div className="card bg-white shadow-xl w-full max-w-2xl p-6">

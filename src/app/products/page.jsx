@@ -5,7 +5,7 @@ import React from 'react';
 const products = async() => {
         const productsCollection = dbConnect(collectionNameObj.servicesCollection)
     const data = await productsCollection.find({}).toArray()
-    console.log(data)
+    // console.log(data)
     return (
             <div className="min-h-screen bg-base-200 p-6">
       <h1 className="text-3xl font-bold text-center mb-8">Products</h1>

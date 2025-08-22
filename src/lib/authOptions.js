@@ -18,7 +18,7 @@ export const authOptions = {
                 password: { label: "Password", type: "password" }
             },
             async authorize(credentials, req) {
-                console.log(credentials)
+                // console.log(credentials)
                 // Add logic here to look up the user from the credentials supplied
                 const user = await loginUser(credentials)
                 // console.log(user)

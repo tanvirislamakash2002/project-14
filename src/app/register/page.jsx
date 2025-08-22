@@ -5,11 +5,13 @@ import { registerUser } from "../actions/auth/registerUser";
 import SocialLogin from "../login/components/SocialLogin";
 
 
+
 export default function RegisterPage() {
+
   const handleRegister = async (data) => {
     const result = await registerUser(data);
-    console.log(result);
-    return result;
+    // console.log(result.acknowledged);
+
   };
   return (
     <div className="min-h-screen bg-base-200 flex items-center justify-center p-4">

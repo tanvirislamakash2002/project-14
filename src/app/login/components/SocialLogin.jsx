@@ -1,22 +1,17 @@
 "use client"
 import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import React, { useEffect } from 'react';
+import React from 'react';
 import toast from 'react-hot-toast';
 
 const SocialLogin = () => {
     const session = useSession()
     const router = useRouter()
     const handleSocialLogin = async () => {
-        signIn('google')
+        toast.success('Redirecting to Google')
+        signIn('google', {callbackUrl:'/'})
     }
 
-    useEffect(()=>{
-        if(session?.status=='authenticated'){
-            toast.success('successfully logged in')
-            router.push('/')
-        }
-    },[session?.status])
     return (
         <div>
             <button

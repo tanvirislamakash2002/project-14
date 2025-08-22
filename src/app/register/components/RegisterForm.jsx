@@ -1,4 +1,5 @@
 "use client"
+import { signIn } from 'next-auth/react';
 import { registerUser } from '../../actions/auth/registerUser';
 import React, {useState} from 'react';
 
@@ -18,7 +19,7 @@ const RegisterForm = ({onSubmit}) => {
 
     try {
       const result = await onSubmit({ name, email, password });
-      console.log(result);
+      await signIn("credentials", { email, password})
     } catch (err) {
       console.error(err);
     } finally {

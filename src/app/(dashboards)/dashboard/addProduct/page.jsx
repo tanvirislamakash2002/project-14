@@ -1,39 +1,57 @@
 "use client"
+import { addProduct } from "../../../../app/actions/addProduct/addProduct";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 const addProducts = () => {
-        const session = useSession()
-            const router = useRouter()
-            useEffect(()=>{
-        if(session?.status!=='authenticated'){
-            router.push('/login')
-        }
-    },[session?.status])
-    
-      const [formData, setFormData] = useState({
-    name: "",
-    description: "",
-    price: "",
-    category: "",
-    stock: "",
-    rating: "",
-    brand: "",
-    createdAt: "",
-  });
+  const { data: session, status } = useSession()
+  const router = useRouter()
+  useEffect(() => {
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    if (status !== 'loading') {
+      if (status !== 'authenticated') {
+        router.push('/login')
+      }
+    }
+  }, [status])
+
+// console.log(session?.user)
+
+
+  const handleSubmit = async(e) => {
+    e.preventDefault()
+    const formData = e.target;
+    const name = formData.name.value;
+    const photo = formData.photo.value;
+    const description = formData.description.value;
+    const price = formData.price.value;
+    const category = formData.category.value;
+    const stock = formData.stock.value;
+    const brand = formData.brand.value;
+    const createdAt = formData.createdAt.value;
+
+    const ProductPayload = {
+      email: session?.user?.email,
+      name,
+      photo,
+      description,
+      price,
+      category,
+      stock,
+      brand,
+      createdAt
+    }
+    const result = await addProduct(ProductPayload)
+    if(result?.acknowledged){
+      toast.success('New Product added successfully')
+      formData.reset()
+    }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Product added:", formData);
-    // here you would send formData to your backend with fetch/axios
-  };
-    return (
-            <div className="min-h-screen bg-base-200 flex justify-center items-center p-6">
+  if (status == 'loading') return <div className="min-h-[calc(100vh-200px)]"><h2>loading</h2></div>
+  return (
+    <div className="min-h-screen bg-base-200 flex justify-center items-center p-6">
       <div className="card bg-white shadow-xl w-full max-w-2xl p-6">
         <h1 className="text-2xl font-bold mb-6">Add New Product</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -44,8 +62,17 @@ const addProducts = () => {
               type="text"
               name="name"
               placeholder="Wireless Headphones"
-              value={formData.name}
-              onChange={handleChange}
+              className="input input-bordered w-full"
+              required
+            />
+          </div>
+          {/* Photo Url */}
+          <div>
+            <label className="label">Photo Url</label>
+            <input
+              type="text"
+              name="photo"
+              placeholder="Wireless Headphones"
               className="input input-bordered w-full"
               required
             />
@@ -57,8 +84,6 @@ const addProducts = () => {
             <textarea
               name="description"
               placeholder="Noise-cancelling over-ear headphones..."
-              value={formData.description}
-              onChange={handleChange}
               className="textarea textarea-bordered w-full"
               required
             ></textarea>
@@ -72,8 +97,6 @@ const addProducts = () => {
               step="0.01"
               name="price"
               placeholder="129.99"
-              value={formData.price}
-              onChange={handleChange}
               className="input input-bordered w-full"
               required
             />
@@ -86,8 +109,6 @@ const addProducts = () => {
               type="text"
               name="category"
               placeholder="Electronics"
-              value={formData.category}
-              onChange={handleChange}
               className="input input-bordered w-full"
             />
           </div>
@@ -99,25 +120,10 @@ const addProducts = () => {
               type="number"
               name="stock"
               placeholder="42"
-              value={formData.stock}
-              onChange={handleChange}
               className="input input-bordered w-full"
             />
           </div>
 
-          {/* Rating */}
-          <div>
-            <label className="label">Rating</label>
-            <input
-              type="number"
-              step="0.1"
-              name="rating"
-              placeholder="4.5"
-              value={formData.rating}
-              onChange={handleChange}
-              className="input input-bordered w-full"
-            />
-          </div>
 
           {/* Brand */}
           <div>
@@ -126,8 +132,6 @@ const addProducts = () => {
               type="text"
               name="brand"
               placeholder="SoundMax"
-              value={formData.brand}
-              onChange={handleChange}
               className="input input-bordered w-full"
             />
           </div>
@@ -138,19 +142,16 @@ const addProducts = () => {
             <input
               type="datetime-local"
               name="createdAt"
-              value={formData.createdAt}
-              onChange={handleChange}
               className="input input-bordered w-full"
             />
           </div>
 
-          <button type="submit" className="btn btn-primary w-full">
-            Add Product
-          </button>
+          <input value={'Add Product'} type="submit" className="btn btn-primary w-full" />
+
         </form>
       </div>
     </div>
-    );
+  );
 };
 
 export default addProducts;

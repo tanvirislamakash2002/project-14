@@ -1,36 +1,30 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Project name:
+NewGoods
 
-## Getting Started
+# Description
 
-First, run the development server:
+This is a simple Next.js 15 (App Router) application demonstrating public and protected routes with authentication via NextAuth.js. Users can explore products publicly and log in to access a protected dashboard for product management. The app includes clean navigation, product browsing, product details, and the ability to add new products after authentication.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+# Route Summary:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Public Routes
 
-## Learn More
+1. / (Landing Page) → Contains Navbar, Hero section, Product Highlights, and Footer. Provides navigation to Login and Products.
 
-To learn more about Next.js, take a look at the following resources:
+2. /login (Login Page) → Users can log in using Google or credentials via NextAuth. Redirects to /products after login.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. /products (Product List) → Displays a list of products (name, description, price) with a "View Details" button.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+4. /products/[id] (Product Details) → Shows full details of a single product.
 
-## Deploy on Vercel
+## Protected Route
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+/dashboard/add-product → Accessible only by authenticated users. Provides a form to add a new product to the database. Redirects unauthenticated users to /login.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# How to Run (Setup):
+1. Clone the repo - git clone
+1. Install packages - npm install
+2. Run Locally - npm run dev

@@ -1,18 +1,22 @@
 "use client"
 import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import React from 'react';
 
 const Navbar = () => {
+  const pathname = usePathname()
   const {data: session, status} = useSession()
-  console.log( status)
+  // console.log( session)
     const navMenu = 
     <>
     <li><Link href={'/'}>Home</Link></li>
       <li><Link href={'/products'}>Products</Link></li>
     </>
+
+    if(!pathname.includes('dashboard'))
     return (
-        <div className="navbar bg-base-100 shadow-sm">
+        <div className="navbar bg-base-100 shadow-sm max-w-7xl mx-auto">
   <div className="navbar-start">
     <div className="dropdown">
       <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -28,24 +32,25 @@ const Navbar = () => {
       </ul>
     </div>
     <Link href={'/'}>
-      <span>NewGoods</span>
+      <span className='text-xl font-semibold'>New<span className='text-primary font-bold text-2xl'>Goods</span></span>
       </Link>
   </div>
   <div className="navbar-center hidden lg:flex">
     <ul className="menu menu-horizontal px-1">
       {navMenu}
       {
-        status!=='authenticated'? "":<li><Link href={'/addProduct'}>Add Product</Link></li>
+        status!=='authenticated'? "":<li><Link href={'/dashboard/addProduct'}>Add Product</Link></li>
       }
     </ul>
   </div>
   {status!=='authenticated'?
-<div className="navbar-end">
-    <Link href={'/login'} className="btn">Login</Link>
-    <Link href={'/register'} className="btn">register</Link>
+<div className="navbar-end gap-3">
+    <Link href={'/login'} className="btn btn-outline border-primary">Login</Link>
+    <Link href={'/register'} className="btn btn-primary">register</Link>
   </div>:
-  <div className="navbar-end">
-    <button onClick={()=>signOut()} className="btn">Logout</button>
+  <div className="navbar-end gap-3">
+    <Link href={'/dashboard'} className="btn btn-outline border-primary">Dashboard</Link>
+    <button onClick={()=>signOut()} className="btn btn-primary">Logout</button>
   </div>  
 }
 </div>
